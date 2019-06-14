@@ -1,0 +1,35 @@
+{
+  "map_size" : 10,
+  "user_position" : "4 4",
+  "drivers" :
+  [
+    {"name" : "Nadam Mekram",
+     "position" : "1 1",
+     "rating" : "5"},
+    {"name" : "Anji Girl",
+     "position" : "1 6",
+     "rating" : "5"},
+    {"name" : "Michelle Marn",
+     "position" : "1 5",
+     "rating" : "5"},
+    {"name" : "Kafn Awl",
+     "position" : "1 4",
+     "rating" : "5"},
+    {"name" : "Manca Odwang",
+     "position" : "1 3",
+     "rating" : "5"}
+  ],
+  "stores" :
+  [
+    {"name" : "GoGo Canteen",
+     "position" : "1 1",
+     "menu" :
+     [
+       {
+         "name" : "Sliced Bug with Stack Overflow Sauce",
+         "price" : "131010"
+       }
+     ]}
+  ]
+
+}
