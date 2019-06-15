@@ -1,0 +1,67 @@
+{
+  "drivers" :
+  [
+    {"name" : "Nadam Mekram",
+     "rating" : 5},
+    {"name" : "Anji Girl",
+     "rating" : 5},
+    {"name" : "Michelle Marn",
+     "rating" : 5},
+    {"name" : "Daju Dawra Permote",
+     "rating" : 5},
+    {"name" : "Manca Odwang",
+     "rating" : 5}
+  ],
+  "stores" :
+  [
+    {"name" : "GoGo Canteen",
+      "menu" :
+      [
+        {
+          "name" : "Sliced Bug with Stack Overflow Sauce",
+          "price" : 131010
+        },
+        {
+          "name" : "Scrum Juice",
+          "price" : 12218
+        },
+        {
+          "name" : "Fried Feature",
+          "price" : 7115
+        }
+      ]},
+    {"name" : "MiKard Resto",
+      "menu" :
+      [
+        {
+          "name" : "Spicy Critics",
+          "price" : 8817
+        },
+        {
+          "name" : "Crispy semicolon",
+          "price" : 24518
+        },
+        {
+          "name" : "Sweet Victory",
+          "price" : 12918
+        }
+      ]},
+    {"name" : "Restoran Karya Anak Bangsa",
+      "menu" :
+      [
+        {
+          "name" : "Unicorn Pasta",
+          "price" : 10119
+        },
+        {
+          "name" : "Fluffy Hard Work",
+          "price" : 15817
+        },
+        {
+          "name" : "Curiosity Smoothie",
+          "price" : 4784
+        }
+      ]}
+  ]
+
+}

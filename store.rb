@@ -11,9 +11,11 @@ class Store
   end
 
   def display_menu
+    puts 'Menu :'
     i = 1
     menu.each do |food|
-      puts "#{i}. #{food.name} #{food.price}"
+      puts "#{i}. #{food.name}"
+      puts "   #{food.price}"
       i += 1
     end
   end

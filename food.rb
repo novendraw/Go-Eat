@@ -11,6 +11,6 @@ class Food
   end
 
   def display_ordered_items
-    puts "#{name}X#{quantity} = #{price * quantity}"
+    puts "#{name} X#{quantity} = #{price * quantity}"
   end
 end

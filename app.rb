@@ -9,37 +9,76 @@ require 'food'
 require 'driver'
 require 'json'
 
-file = File.open('example_data.json', 'r')
-data = JSON.parse(file.read)
-file.close
-
-map_size = data['map_size']
-stores = data['stores']
-drivers = data['drivers']
-map_coordinates = Hash.new(' #')
-drivers.each do |driver|
-  position = driver['position'].split(' ')
-  driver = Driver.new(driver['name'],
-                      [position[0].to_i, position[1].to_i],
-                      driver['rating'])
-  map_coordinates[driver.position] = ' D'
-end
-
-stores.each do |store|
-  position = store['position'].split(' ')
-  store['menu'].each do |food|
-    food = Food.new(food['name'],
-                    food['price'], 0)
+map_size = 20
+map_coordinates = Hash.new(' -')
+stores = []
+stores_temp = []
+case ARGV.length
+when 0
+  file = File.open('default_data.json', 'r')
+  data = JSON.parse(file.read)
+  file.close
+  stores = data['stores']
+  drivers = data['drivers']
+  drivers.each do |driver|
+    driver = Driver.new(driver['name'],
+                        [rand(1..20), rand(1..20)],
+                        driver['rating'])
+    map_coordinates[driver.position] = ' D'
   end
-  store = Store.new(store['name'],
-                    [position[0].to_i, position[1].to_i],
-                    store['menu'])
-  map_coordinates[store.position] = ' S'
-end
 
-position = data['user_position'].split(' ')
-user = User.new([position[0].to_i, position[1].to_i], [])
-map_coordinates[user.position] = ' U'
+  stores.each do |store|
+    menu = []
+    store['menu'].each do |food|
+      food = Food.new(food['name'],
+                      food['price'], 0)
+      menu.push(food)
+    end
+    store = Store.new(store['name'],
+                      [rand(1..20), rand(1..20)],
+                      menu)
+    map_coordinates[store.position] = ' S'
+    stores_temp.push(store)
+  end
+  stores = stores_temp
+  user = User.new([rand(1..20), rand(1..20)], [])
+  map_coordinates[user.position] = ' U'
+when 1
+  file = File.open(ARGV[0], 'r')
+  data = JSON.parse(file.read)
+  file.close
+
+  map_size = data['map_size']
+  stores = data['stores']
+  drivers = data['drivers']
+  drivers.each do |driver|
+    position = driver['position'].split(' ')
+    driver = Driver.new(driver['name'],
+                        [position[0].to_i, position[1].to_i],
+                        driver['rating'])
+    map_coordinates[driver.position] = ' D'
+  end
+
+  stores.each do |store|
+    position = store['position'].split(' ')
+    store['menu'].each do |food|
+      food = Food.new(food['name'],
+                      food['price'], 0)
+      menu.push(food)
+    end
+    store = Store.new(store['name'],
+                      [position[0].to_i, position[1].to_i],
+                      menu)
+    map_coordinates[store.position] = ' S'
+    menu = []
+  end
+
+  position = data['user_position'].split(' ')
+  user = User.new([position[0].to_i, position[1].to_i], [])
+  map_coordinates[user.position] = ' U'
+else
+  puts 'Wrong number of argument(s)'
+end
 
 command = ''
 puts 'Welcome to Go-Eat, #1 Food Delivery Service Around The World'
