@@ -11,6 +11,8 @@ class Food
   end
 
   def display_ordered_items
+    return if quantity.zero?
+
     puts "#{name} X#{quantity} = #{price * quantity}"
   end
 end

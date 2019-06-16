@@ -87,12 +87,13 @@ while command != '4'
   puts '1. Show Map'
   puts '2. Order Food'
   puts '3. View History'
+  puts '4. Exit'
   command = gets.chomp
   case command
   when '1'
     Action.show_map(map_size, map_coordinates)
   when '2'
-    Action.order_food
+    Action.order_food(stores)
   when '3'
     Action.view_history
   when '4'
