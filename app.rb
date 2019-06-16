@@ -9,10 +9,16 @@ require 'food'
 require 'driver'
 require 'json'
 
+UNIT_COST = 300
+
 map_size = 20
 map_coordinates = Hash.new(' -')
 stores = []
 stores_temp = []
+drivers = []
+drivers_temp = []
+user = []
+
 case ARGV.length
 when 0
   file = File.open('default_data.json', 'r')
@@ -25,8 +31,9 @@ when 0
                         [rand(1..20), rand(1..20)],
                         driver['rating'])
     map_coordinates[driver.position] = ' D'
+    drivers_temp.push(driver)
   end
-
+  drivers = drivers_temp
   stores.each do |store|
     menu = []
     store['menu'].each do |food|
@@ -57,9 +64,11 @@ when 1
                         [position[0].to_i, position[1].to_i],
                         driver['rating'])
     map_coordinates[driver.position] = ' D'
+    drivers_temp.push(driver)
   end
-
+  drivers = drivers_temp
   stores.each do |store|
+    menu = []
     position = store['position'].split(' ')
     store['menu'].each do |food|
       food = Food.new(food['name'],
@@ -70,9 +79,9 @@ when 1
                       [position[0].to_i, position[1].to_i],
                       menu)
     map_coordinates[store.position] = ' S'
-    menu = []
+    stores_temp.push(store)
   end
-
+  stores = stores_temp
   position = data['user_position'].split(' ')
   user = User.new([position[0].to_i, position[1].to_i], [])
   map_coordinates[user.position] = ' U'
@@ -93,7 +102,19 @@ while command != '4'
   when '1'
     Action.show_map(map_size, map_coordinates)
   when '2'
-    Action.order_food(stores)
+    order_data = Action.order_food(stores)
+    sum = 0
+    order_data[0].each do |food|
+      sum += food.quantity * food.price
+    end
+    finish_order_data = [order_data[0],
+                         user,
+                         stores[order_data[1]],
+                         drivers,
+                         UNIT_COST,
+                         map_size,
+                         sum]
+    Action.finish_order(finish_order_data)
   when '3'
     Action.view_history
   when '4'

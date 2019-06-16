@@ -56,7 +56,8 @@ module Action
     when count_menu + 2
       go_back_from_order(input, stores, store_number, order)
     when count_menu + 1
-      puts 'finish order'
+      order_data = [order, store_number]
+      order_data
     else
       add_order(input - 1, order, stores, store_number)
     end
@@ -67,15 +68,45 @@ module Action
     puts '2. Finish Order'
     input = gets.chomp.to_i
     confirm_order(stores, store_number, order) while input != 1 && input != 2
-    if input == 1
-      choose_menu(stores, store_number, order)
-    else
-      finish_order(order)
+    if input == 2
+      order_data = [order, store_number]
+      return order_data
     end
+
+    choose_menu(stores, store_number, order)
   end
 
-  def self.finish_order(order)
-    order.each(&:display_ordered_items)
+  def self.finish_order(data)
+    puts 'Ordered Items :'
+    data[0].each(&:display_ordered_items)
+    nearest_driver = pick_nearest_driver(data[3], data[2], data[5])
+    fee = count_delivery_fee(data[1], data[2], nearest_driver, data[4])
+    puts "Delivery Fee : #{fee}"
+    puts "Total Price = #{fee + data[6]}"
+  end
+
+  def self.pick_nearest_driver(drivers, store, map_size)
+    picked_driver = Driver
+    min = map_size * 2 + 1
+    drivers.each do |driver|
+      distance = count_distance(driver, store)
+      if distance < min
+        min = distance
+        picked_driver = driver
+      end
+    end
+    picked_driver
+  end
+
+  def self.count_distance(start_point, end_point)
+    x = (start_point.position[0] - end_point.position[0]).abs
+    y = (start_point.position[1] - end_point.position[1]).abs
+    x + y
+  end
+
+  def self.count_delivery_fee(user, store, driver, unit_cost)
+    total_distance = count_distance(user, store) + count_distance(driver, store)
+    unit_cost * total_distance
   end
 
   def self.go_back_from_order(input, stores, store_number, order)
