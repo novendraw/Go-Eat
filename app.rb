@@ -103,19 +103,28 @@ while command != '4'
     Action.show_map(map_size, map_coordinates)
   when '2'
     order_data = Action.order_food(stores)
+    order_data = [[]] if order_data.is_a? Integer
+
     sum = 0
     order_data[0].each do |food|
       sum += food.quantity * food.price
     end
-    finish_order_data = [order_data[0],
-                         user,
-                         stores[order_data[1]],
-                         drivers,
-                         UNIT_COST,
-                         map_size,
-                         sum]
-    Action.finish_order(finish_order_data)
+    if sum != 0
+      trans_data = [order_data[0],
+                    user,
+                    stores[order_data[1]],
+                    drivers,
+                    UNIT_COST,
+                    map_size,
+                    sum]
+      picked_driver = Action.finish_order(trans_data, stores, order_data[1])
+
+      Action.display_routes(user, trans_data[2], picked_driver)
+      Action.write_to_history(user, trans_data[2], picked_driver, sum)
+    end
   when '3'
+    puts 'History :'
+    puts ''
     Action.view_history
   when '4'
     puts 'Goodbye, Thanks for using our service :D'
