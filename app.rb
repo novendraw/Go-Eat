@@ -18,8 +18,8 @@ stores_temp = []
 drivers = []
 drivers_temp = []
 user = []
-
-case ARGV.length
+input_array = ARGV
+case input_array.size
 when 0
   file = File.open('default_data.json', 'r')
   data = JSON.parse(file.read)
@@ -50,8 +50,39 @@ when 0
   stores = stores_temp
   user = User.new([rand(1..20), rand(1..20)], [])
   map_coordinates[user.position] = ' U'
+when 3
+  map_size = input_array[0].to_i
+  file = File.open('default_data.json', 'r')
+  data = JSON.parse(file.read)
+  file.close
+  stores = data['stores']
+  drivers = data['drivers']
+  drivers.each do |driver|
+    driver = Driver.new(driver['name'],
+                        [rand(1..20), rand(1..20)],
+                        0)
+    map_coordinates[driver.position] = ' D'
+    drivers_temp.push(driver)
+  end
+  drivers = drivers_temp
+  stores.each do |store|
+    menu = []
+    store['menu'].each do |food|
+      food = Food.new(food['name'],
+                      food['price'], 0)
+      menu.push(food)
+    end
+    store = Store.new(store['name'],
+                      [rand(1..20), rand(1..20)],
+                      menu)
+    map_coordinates[store.position] = ' S'
+    stores_temp.push(store)
+  end
+  stores = stores_temp
+  user = User.new([input_array[1].to_i, input_array[2].to_i], [])
+  map_coordinates[user.position] = ' U'
 when 1
-  file = File.open(ARGV[0], 'r')
+  file = File.open(input_array[0], 'r')
   data = JSON.parse(file.read)
   file.close
 
@@ -97,7 +128,7 @@ while command != '4'
   puts '2. Order Food'
   puts '3. View History'
   puts '4. Exit'
-  command = gets.chomp
+  command = STDIN.gets.chomp
   case command
   when '1'
     Action.show_map(map_size, map_coordinates)

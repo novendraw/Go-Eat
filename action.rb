@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Class that work as builder
 module Action
   def self.show_map(size, map)
     i = 1
@@ -26,7 +25,7 @@ module Action
 
   def self.order_food(stores)
     display_stores(stores, 1)
-    input = gets.chomp.to_i
+    input = STDIN.gets.chomp.to_i
     order_food(stores) if input > (stores.size + 1) || input < 1
     return 0 if input == stores.size + 1
 
@@ -39,7 +38,7 @@ module Action
   def self.choose_menu(stores, store_number, order)
     count_menu = stores[store_number].menu.size
     stores[store_number].display_menu(count_menu)
-    input = gets.chomp.to_i
+    input = STDIN.gets.chomp.to_i
     case input
     when 1..(count_menu + 2)
       order_case(stores, input, count_menu, store_number, order)
@@ -70,7 +69,7 @@ module Action
   def self.confirm_order(stores, store_number, order)
     puts '1. Add More Items'
     puts '2. Finish Order'
-    input = gets.chomp.to_i
+    input = STDIN.gets.chomp.to_i
     case input
     when 1
       choose_menu(stores, store_number, order)
@@ -90,7 +89,7 @@ module Action
     puts "Delivery Fee : #{fee}"
     puts "Total Price = #{fee + data[6]}"
     # puts 'Are You Sure?(y/n)'
-    # input = gets.chomp
+    # input = STDIN.gets.chomp
     # input == 'n' ? choose_menu(stores, store_number, data[0]) : nearest_driver
     nearest_driver
   end
@@ -157,7 +156,7 @@ module Action
     puts 'If you go back, the list of orders will disappear'
     while input != 'y' && input != 'n'
       puts 'Are You Sure?(y/n)'
-      input = gets.chomp
+      input = STDIN.gets.chomp
     end
     if input == 'y'
       order_food(stores)
@@ -170,7 +169,7 @@ module Action
     input = 7
     until input.between?(1, 5)
       puts 'Give rating for driver?(1 - 5)'
-      input = gets.chomp.to_f
+      input = STDIN.gets.chomp.to_f
     end
     file = File.open('history.txt', 'a')
     file.puts "Rating : #{input}"
