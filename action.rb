@@ -71,20 +71,22 @@ module Action
     puts '1. Add More Items'
     puts '2. Finish Order'
     input = gets.chomp.to_i
-    confirm_order(stores, store_number, order) while input != 1 && input != 2
-    if input == 2
+    case input
+    when 1
+      choose_menu(stores, store_number, order)
+    when 2
       order_data = [order, store_number]
       return order_data
+    else
+      return confirm_order(stores, store_number, order)
     end
-
-    choose_menu(stores, store_number, order)
   end
 
-  def self.finish_order(data, _stores, _store_number)
+  def self.finish_order(data)
     puts 'Ordered Items :'
     data[0].each(&:display_ordered_items)
     nearest_driver = pick_nearest_driver(data[3], data[2], data[5])
-    fee = count_delivery_fee(data[1], data[2], nearest_driver, data[4])
+    fee = count_delivery_fee(data[1], data[2], data[3][nearest_driver], data[4])
     puts "Delivery Fee : #{fee}"
     puts "Total Price = #{fee + data[6]}"
     # puts 'Are You Sure?(y/n)'
@@ -94,14 +96,16 @@ module Action
   end
 
   def self.pick_nearest_driver(drivers, store, map_size)
-    picked_driver = Driver
+    picked_driver = 0
+    i = 0
     min = map_size * 2 + 1
     drivers.each do |driver|
       distance = count_distance(driver, store)
       if distance < min
         min = distance
-        picked_driver = driver
+        picked_driver = i
       end
+      i += 1
     end
     picked_driver
   end
@@ -165,8 +169,8 @@ module Action
   def self.write_to_history(user, store, driver, sum)
     input = 7
     until input.between?(1, 5)
-      puts 'Give rating for driver?'
-      input = gets.chomp.to_i
+      puts 'Give rating for driver?(1 - 5)'
+      input = gets.chomp.to_f
     end
     file = File.open('history.txt', 'a')
     file.puts "Rating : #{input}"
@@ -176,6 +180,9 @@ module Action
     file.puts "Total Payment : #{sum}"
     file.puts ''
     file.close
+    return input if driver.rating.zero?
+
+    (input + driver.rating.to_f) / 2.0
   end
 
   def self.view_history
@@ -185,6 +192,29 @@ module Action
       file.close
     else
       puts 'Not A Single Order Was Made'
+    end
+  end
+
+  def self.drivers_check(drivers)
+    drivers_temp = []
+    drivers.each do |driver|
+      drivers_temp.push(driver) if driver.rating.to_f >= 3 || driver.rating.to_f.zero?
+    end
+    drivers_temp.each do |driver|
+      driver.position = [rand(1..20), rand(1..20)]
+    end
+    return drivers_temp unless drivers_temp.empty?
+
+    file = File.open('default_data.json', 'r')
+    data = JSON.parse(file.read)
+    file.close
+    drivers = data['drivers']
+    drivers.each do |driver|
+      driver = Driver.new(driver['name'],
+                          [rand(1..20), rand(1..20)],
+                          0)
+      drivers_temp.push(driver)
+      return drivers_temp
     end
   end
 end

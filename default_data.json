@@ -1,16 +1,11 @@
 {
   "drivers" :
   [
-    {"name" : "Nadam Mekram",
-     "rating" : 5},
-    {"name" : "Anji Girl",
-     "rating" : 5},
-    {"name" : "Michelle Marn",
-     "rating" : 5},
-    {"name" : "Daju Dawra Permote",
-     "rating" : 5},
-    {"name" : "Manca Odwang",
-     "rating" : 5}
+    {"name" : "Nadam Mekram"},
+    {"name" : "Anji Girl"},
+    {"name" : "Michelle Marn"},
+    {"name" : "Daju Dawra Permote"},
+    {"name" : "Manca Odwang"}
   ],
   "stores" :
   [

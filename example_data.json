@@ -4,20 +4,15 @@
   "drivers" :
   [
     {"name" : "Nadam Mekram",
-     "position" : "5 1",
-     "rating" : 5},
+     "position" : "5 1"},
     {"name" : "Anji Girl",
-     "position" : "1 6",
-     "rating" : 5},
+     "position" : "1 6"},
     {"name" : "Michelle Marn",
-     "position" : "1 5",
-     "rating" : 5},
+     "position" : "1 5"},
     {"name" : "Kafn Awl",
-     "position" : "1 4",
-     "rating" : 5},
+     "position" : "1 4"},
     {"name" : "Manca Odwang",
-     "position" : "1 3",
-     "rating" : 5}
+     "position" : "1 3"}
   ],
   "stores" :
   [

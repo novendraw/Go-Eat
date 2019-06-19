@@ -29,7 +29,7 @@ when 0
   drivers.each do |driver|
     driver = Driver.new(driver['name'],
                         [rand(1..20), rand(1..20)],
-                        driver['rating'])
+                        0)
     map_coordinates[driver.position] = ' D'
     drivers_temp.push(driver)
   end
@@ -62,7 +62,7 @@ when 1
     position = driver['position'].split(' ')
     driver = Driver.new(driver['name'],
                         [position[0].to_i, position[1].to_i],
-                        driver['rating'])
+                        0)
     map_coordinates[driver.position] = ' D'
     drivers_temp.push(driver)
   end
@@ -117,10 +117,13 @@ while command != '4'
                     UNIT_COST,
                     map_size,
                     sum]
-      picked_driver = Action.finish_order(trans_data, stores, order_data[1])
+      picked_driver = Action.finish_order(trans_data)
 
-      Action.display_routes(user, trans_data[2], picked_driver)
-      Action.write_to_history(user, trans_data[2], picked_driver, sum)
+      Action.display_routes(user, trans_data[2], drivers[picked_driver])
+      drivers[picked_driver].rating = Action.write_to_history(
+        user, trans_data[2], drivers[picked_driver], sum
+      )
+      drivers = Action.drivers_check(drivers)
     end
   when '3'
     puts 'History :'
@@ -131,5 +134,12 @@ while command != '4'
   else
     puts 'Sorry, you cannot do that'
   end
-
+  map_coordinates = Hash.new(' -')
+  drivers.each do |driver|
+    map_coordinates[driver.position] = ' D'
+  end
+  stores.each do |store|
+    map_coordinates[store.position] = ' S'
+  end
+  map_coordinates[user.position] = ' U'
 end
