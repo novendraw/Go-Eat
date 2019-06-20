@@ -7,7 +7,7 @@
 
 You need **ruby** to run this program. Please go to [ruby's website](https://www.ruby-lang.org) if you haven't installed it.
 
-Install this app locally:
+Install this app locally :
 
 ```
 git clone https://github.com/novendraw/Go-Eat
@@ -44,6 +44,8 @@ The app will display all orders history of the user from a file in `data` folder
 
 ## Data Format
 
+The following is an example of data format :
+
 ```
 {
   "map_size" : 20,
@@ -76,7 +78,7 @@ The app will display all orders history of the user from a file in `data` folder
 }
 ```
 
-This data format example also available in `data` folder as `example_data.json`
+This data format example also available in `data` folder as `example_data.json`.
 
 ## Application Design
 
@@ -90,9 +92,9 @@ The `app.rb` works as builder, and the three modules (`show_map.rb`, `order_food
 
 Each module is built using **state design pattern**.
 
-I choose the **builder design pattern** because I want the app to works with a goal to **build** the information that will given to user.
+I choose the **builder design pattern** because I want the app to works with a goal to **build** the information that will given to the user.
 
-I choose the **state design pattern** because as the director, i want the *three modules* 
+I choose the **state design pattern** because as the director, I want the *three modules* 
 to give decision from its current state, not the whole program, so the variation of the decision depends on its current state.
 
 I choose the **JSON** data format for the input file because :

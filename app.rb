@@ -64,7 +64,7 @@ when 3
   drivers = data['drivers']
   drivers.each do |driver|
     driver = Driver.new(driver['name'],
-                        [rand(1..20), rand(1..20)],
+                        [rand(1..map_size), rand(1..map_size)],
                         0)
     map_coordinates[driver.position] = ' D'
     drivers_temp.push(driver)
@@ -78,7 +78,7 @@ when 3
       menu.push(food)
     end
     store = Store.new(store['name'],
-                      [rand(1..20), rand(1..20)],
+                      [rand(1..map_size), rand(1..map_size)],
                       menu)
     map_coordinates[store.position] = ' S'
     stores_temp.push(store)
@@ -133,6 +133,34 @@ puts '   _____  ____             ______       _______
  | |__| | |__| |          | |____ / ____ \| |
   \_____|\____/           |______/_/    \_\_|'
 puts 'Welcome to Go-Eat, #1 Food Delivery Service Around The World'
+
+if user.position[0] > map_size || user.position[1] > map_size
+  puts 'Looks like your user is in another planet :('
+  return
+end
+
+outside_map = false
+drivers.each do |driver|
+  if driver.position[0] > map_size || driver.position[1] > map_size
+    outside_map = true
+  end
+end
+
+if outside_map
+  puts 'Looks like some driver\'s work area is on another planet :('
+  return
+end
+
+stores.each do |store|
+  if store.position[0] > map_size || store.position[1] > map_size
+    outside_map = true
+  end
+end
+
+if outside_map
+  puts 'Looks like some store is open the business in another planet :('
+  return
+end
 
 # main_loop
 while command != '4'
