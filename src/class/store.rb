@@ -11,7 +11,6 @@ class Store
   end
 
   def display_menu(count_menu)
-    puts 'Menu :'
     i = 1
     menu.each do |food|
       puts "#{i}. #{food.name} #{food.price}"

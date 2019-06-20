@@ -2,7 +2,9 @@
 
 $LOAD_PATH << '.'
 
-require 'src/module/action'
+require 'src/module/view_history'
+require 'src/module/order_food'
+require 'src/module/show_map'
 require 'src/class/user'
 require 'src/class/store'
 require 'src/class/food'
@@ -121,19 +123,30 @@ else
 end
 
 command = ''
+puts '   _____  ____             ______       _______
+  / ____|/ __ \           |  ____|   /\|__   __|
+ | |  __| |  | |  ______  | |__     /  \  | |
+ | | |_ | |  | | |______| |  __|   / /\ \ | |
+ | |__| | |__| |          | |____ / ____ \| |
+  \_____|\____/           |______/_/    \_\_|'
 puts 'Welcome to Go-Eat, #1 Food Delivery Service Around The World'
 while command != '4'
+  puts ''
   puts 'What would you like to do?'
   puts '1. Show Map'
   puts '2. Order Food'
   puts '3. View History'
   puts '4. Exit'
+  print 'command : '
   command = STDIN.gets.chomp
   case command
   when '1'
-    Action.show_map(map_size, map_coordinates)
+    puts 'Maps :'
+    ShowMap.show_map(map_size, map_coordinates)
+    ShowMap.show_information
+    ShowMap.display_stores(stores, 1)
   when '2'
-    order_data = Action.order_food(stores)
+    order_data = OrderFood.order_food(stores)
     order_data = [[]] if order_data.is_a? Integer
 
     sum = 0
@@ -148,21 +161,23 @@ while command != '4'
                     UNIT_COST,
                     map_size,
                     sum]
-      picked_driver = Action.finish_order(trans_data)
+      picked_driver = OrderFood.finish_order(trans_data)
 
-      Action.display_routes(user, trans_data[2], drivers[picked_driver])
-      drivers[picked_driver].rating = Action.write_to_history(
+      OrderFood.display_routes(user, trans_data[2], drivers[picked_driver])
+      drivers[picked_driver].rating = ViewHistory.write_to_history(
         user, trans_data[2], drivers[picked_driver], sum
       )
-      drivers = Action.drivers_check(drivers)
+      drivers = ShowMap.drivers_check(drivers)
     end
   when '3'
     puts 'History :'
     puts ''
-    Action.view_history
+    ViewHistory.view_history
   when '4'
+    puts ''
     puts 'Goodbye, Thanks for using our service :D'
   else
+    puts ''
     puts 'Sorry, you cannot do that'
   end
   map_coordinates = Hash.new(' -')
