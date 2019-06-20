@@ -2,11 +2,11 @@
 
 $LOAD_PATH << '.'
 
-require 'action'
-require 'user'
-require 'store'
-require 'food'
-require 'driver'
+require 'src/module/action'
+require 'src/class/user'
+require 'src/class/store'
+require 'src/class/food'
+require 'src/class/driver'
 require 'json'
 
 UNIT_COST = 300
@@ -21,7 +21,7 @@ user = []
 input_array = ARGV
 case input_array.size
 when 0
-  file = File.open('default_data.json', 'r')
+  file = File.open('data/default_data.json', 'r')
   data = JSON.parse(file.read)
   file.close
   stores = data['stores']
@@ -52,7 +52,7 @@ when 0
   map_coordinates[user.position] = ' U'
 when 3
   map_size = input_array[0].to_i
-  file = File.open('default_data.json', 'r')
+  file = File.open('data/default_data.json', 'r')
   data = JSON.parse(file.read)
   file.close
   stores = data['stores']
@@ -82,7 +82,7 @@ when 3
   user = User.new([input_array[1].to_i, input_array[2].to_i], [])
   map_coordinates[user.position] = ' U'
 when 1
-  file = File.open(input_array[0], 'r')
+  file = File.open("data/#{input_array[0]}", 'r')
   data = JSON.parse(file.read)
   file.close
 
