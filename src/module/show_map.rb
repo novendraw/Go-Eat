@@ -36,7 +36,8 @@ module ShowMap
     end
     return drivers_temp unless drivers_temp.empty?
 
-    file = File.open('default_data.json', 'r')
+    puts 'Looking For Driver'
+    file = File.open('data/default_data.json', 'r')
     data = JSON.parse(file.read)
     file.close
     drivers = data['drivers']
@@ -45,8 +46,8 @@ module ShowMap
                           [rand(1..20), rand(1..20)],
                           0)
       drivers_temp.push(driver)
-      return drivers_temp
     end
+    drivers_temp
   end
 
   # show map information
