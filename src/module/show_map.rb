@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-# Module for show_map command
+# Show Map Director
+# module for show_map command
 module ShowMap
   def self.show_map(size, map)
     i = 1
@@ -15,6 +16,7 @@ module ShowMap
     end
   end
 
+  # display available store and its location
   def self.display_stores(stores, iterator)
     while iterator <= stores.size
       data = stores[iterator - 1]
@@ -23,6 +25,7 @@ module ShowMap
     end
   end
 
+  # do driver's rating check before assigned to map coordinates
   def self.drivers_check(drivers)
     drivers_temp = []
     drivers.each do |driver|
@@ -46,6 +49,7 @@ module ShowMap
     end
   end
 
+  # show map information
   def self.show_information
     puts 'Information :'
     puts 'Top Left is (1,1) and Bottom Right is (20,20)'

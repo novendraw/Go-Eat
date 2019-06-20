@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Builder
 $LOAD_PATH << '.'
 
 require 'src/module/view_history'
@@ -21,6 +22,8 @@ drivers = []
 drivers_temp = []
 user = []
 input_array = ARGV
+
+# data_initialization
 case input_array.size
 when 0
   file = File.open('data/default_data.json', 'r')
@@ -130,6 +133,8 @@ puts '   _____  ____             ______       _______
  | |__| | |__| |          | |____ / ____ \| |
   \_____|\____/           |______/_/    \_\_|'
 puts 'Welcome to Go-Eat, #1 Food Delivery Service Around The World'
+
+# main_loop
 while command != '4'
   puts ''
   puts 'What would you like to do?'

@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+# View History Director
 # module for view_history command
 module ViewHistory
+  # write routes to file
   def self.write_routes(user, store, driver)
     file = File.open('data/history_with_routes.txt', 'a')
     if driver.position != store.position
@@ -22,6 +24,7 @@ module ViewHistory
     file.close
   end
 
+  # write route steps to file
   def self.write_route_steps(file, start_point, end_point)
     start_x = start_point.position[0]
     end_x = end_point.position[0]
@@ -65,6 +68,7 @@ module ViewHistory
     (input + driver.rating.to_f) / 2.0
   end
 
+  # view history from file
   def self.view_history
     if File.exist?('data/history.txt')
       file = File.open('data/history.txt', 'r')

@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+# Order Food Director
 # module for order_food command
 module OrderFood
+  # display all available store
   def self.display_stores(stores, iterator)
     while iterator <= stores.size
       puts "#{iterator}. #{stores[iterator - 1].name}"
@@ -26,6 +28,7 @@ module OrderFood
     choose_menu(stores, store_number, stores[store_number].menu)
   end
 
+  # choose one food from menu in a store
   def self.choose_menu(stores, store_number, order)
     puts ''
     puts 'Please pick item(s) from menu :'
@@ -41,11 +44,13 @@ module OrderFood
     end
   end
 
+  # add chosen menu to ordered item(s)
   def self.add_order(input, order, stores, store_number)
     order[input].quantity += 1
     confirm_order(stores, store_number, order)
   end
 
+  # check case for order input
   def self.order_case(stores, input, count_menu, store_number, order)
     case input
     when count_menu + 2
@@ -60,6 +65,7 @@ module OrderFood
     end
   end
 
+  # confirm an order
   def self.confirm_order(stores, store_number, order)
     puts ''
     puts '1. Add More Items'
@@ -77,6 +83,7 @@ module OrderFood
     end
   end
 
+  # finish an order
   def self.finish_order(data)
     puts ''
     puts 'Ordered Items :'
@@ -91,6 +98,7 @@ module OrderFood
     nearest_driver
   end
 
+  # pick nearest driver from chosen store
   def self.pick_nearest_driver(drivers, store, map_size)
     picked_driver = 0
     i = 0
@@ -106,6 +114,7 @@ module OrderFood
     picked_driver
   end
 
+  # display routes that driver take
   def self.display_routes(user, store, driver)
     if driver.position != store.position
       print ' - driver is on the way to store, start at '
@@ -123,6 +132,7 @@ module OrderFood
     puts 'driver arrived at your place!'
   end
 
+  # display route steps from driver routes
   def self.display_route_steps(start_point, end_point)
     start_x = start_point.position[0]
     end_x = end_point.position[0]
@@ -138,17 +148,20 @@ module OrderFood
     end
   end
 
+  # return distance from two point
   def self.count_distance(start_point, end_point)
     x = (start_point.position[0] - end_point.position[0]).abs
     y = (start_point.position[1] - end_point.position[1]).abs
     x + y
   end
 
+  # return total delivery fee from distance
   def self.count_delivery_fee(user, store, driver, unit_cost)
     total_distance = count_distance(user, store) + count_distance(driver, store)
     unit_cost * total_distance
   end
 
+  # handle when go back from menu display
   def self.go_back_from_order(input, stores, store_number, order)
     puts 'If you go back, the list of orders will disappear'
     while input != 'y' && input != 'n'

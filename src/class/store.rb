@@ -10,6 +10,7 @@ class Store
     @menu = menu
   end
 
+  # display each food from menu
   def display_menu(count_menu)
     i = 1
     menu.each do |food|

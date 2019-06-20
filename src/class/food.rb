@@ -10,6 +10,7 @@ class Food
     @quantity = quantity
   end
 
+  # display ordered items with its quantity and total price
   def display_ordered_items
     return if quantity.zero?
 
