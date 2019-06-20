@@ -26,10 +26,9 @@ module OrderFood
     choose_menu(stores, store_number, stores[store_number].menu)
   end
 
-  def self.choose_menu(stores, store_number, orders)
+  def self.choose_menu(stores, store_number, order)
     puts ''
     puts 'Please pick item(s) from menu :'
-    order = orders
     count_menu = stores[store_number].menu.size
     stores[store_number].display_menu(count_menu)
     print 'command : '

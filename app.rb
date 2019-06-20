@@ -188,4 +188,9 @@ while command != '4'
     map_coordinates[store.position] = ' S'
   end
   map_coordinates[user.position] = ' U'
+  stores.each do |store|
+    store.menu.each do |food|
+      food.quantity = 0
+    end
+  end
 end
